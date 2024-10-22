@@ -20,7 +20,7 @@ import { LoggerModule } from './logger/logger.module';
     ThrottlerModule.forRoot([
       {
         ttl: 1000,
-        limit: 5,
+        limit: 1,
       }
     ]),
     LoggerModule

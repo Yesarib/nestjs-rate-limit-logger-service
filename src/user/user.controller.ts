@@ -1,15 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Ip } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.model';
 import { Throttle, SkipThrottle } from '@nestjs/throttler';
+import { LoggerService } from 'src/logger/logger.service';
 
-
-@SkipThrottle()
+// @SkipThrottle()
 @Controller('user')
 export class UserController {
-    constructor(private readonly userService: UserService) {
-
-    }
+    constructor(private readonly userService: UserService) { }
+    private readonly logger = new LoggerService(UserController.name)
 
     @Post()
     async createUser(@Body() user: User) {
@@ -17,7 +16,8 @@ export class UserController {
     }
 
     @Get()
-    async getUsers() {
+    async getUsers(@Ip() ip: string) {
+        this.logger.specialLog(`Request for all users from: \t ${ip}`, UserController.name)
         return await this.userService.getUsers();
     }
 
