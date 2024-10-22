@@ -17,13 +17,14 @@ export class LoggerService extends ConsoleLogger {
             }
             if (logType === 'special') {
                 await fsPromises.appendFile(path.join(__dirname, '..', '..', 'logs', 'specialLogFile.log'), formattedEntry)
+            } else {
+                await fsPromises.appendFile(path.join(__dirname, '..', '..', 'logs', 'logFile.log'), formattedEntry)
             }
-            await fsPromises.appendFile(path.join(__dirname, '..', '..', 'logs', 'logFile.log'), formattedEntry)
         } catch (error) {
             if (error instanceof Error) console.error(error.message)
         }
     }
-    log(message: any, context?: string) {
+    log(message: any, context?: string) {       
         const entry = `${context}\t${message}`
         this.logToFile(entry)
 

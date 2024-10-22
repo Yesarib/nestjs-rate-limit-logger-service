@@ -38,7 +38,8 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
             .status(responseObj.statusCode)
             .json(responseObj)
 
-        this.logger.error(responseObj.response, AllExceptionsFilter.name)
+        const logMessage = `${responseObj.path} \t ${responseObj.response}`
+        this.logger.error(logMessage, AllExceptionsFilter.name)
 
         super.catch(exception, host)
     }
